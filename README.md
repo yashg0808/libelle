@@ -102,7 +102,7 @@ npm run dev
 
 - Frontend should point to:
 ```js
-const API_URL = "http://127.0.0.1:8000"
+const API_URL = "http://localhost:8000"
 ```
 - Later in production, this becomes:
  ```js
@@ -171,9 +171,12 @@ Once approved, you will receive:
 
 ## License
 
-This project is licensed under the **GNU General Public License v3.0 (GPL-3.0)**.
+This project is licensed under the **GNU Affero General Public License v3.0 (AGPL-3.0)**.
 
 You are free to use, modify, and distribute this software under the terms of that license.
+
+If you run this software as a network service, you must make any modifications to the source
+code available to users of that service.
 
 ---
 

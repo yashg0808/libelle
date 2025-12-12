@@ -144,7 +144,7 @@ def update_resume_in_sheet(resume_id: int, parsed: Dict[str, Any]) -> None:
     # Update the parser output columns
     sheet.values().update(
         spreadsheetId=GOOGLE_SHEET_ID,
-        range=f"{SHEET_NAME}!L{row_index}:AB{row_index}",
+        range=f"{SHEET_NAME}!M{row_index}:AC{row_index}",
         valueInputOption="RAW",
         body={"values": [parser_row]},
     ).execute()

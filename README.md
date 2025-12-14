@@ -68,7 +68,7 @@ This is a public repository by design. Therefore:
 - All examples in `/infrastructure` are templates only
 - Production configuration lives in a **private infrastructure repo**
 
-- If you are deploying to a server or Pi, you must create:
+If you are deploying to a server or Pi, you must create:
  ```bash
 /etc/libelle/libelle.env
   ```
@@ -82,9 +82,23 @@ DRIVE_ROOT_FOLDER_ID=...
 
 ## Getting Started (Local Dev)
 
+### Backend Google setup (required for real end-to-end testing)
+
+Libelle uses:
+- Drive OAuth (via `/authorize` → creates `token.json`)
+- Sheets Service Account (share your test sheet with the service account email)
+
+Follow the step-by-step guide here:
+- [`docs/local-dev-backend-google-setup.md`](https://github.com/The-Chamber-of-Us/libelle/blob/main/docs/local-dev-backend-google-setup.md)
+
+Then copy:
+- `backend/.env.example` → `backend/.env`
+and fill in your own IDs and local credential filenames (never commit secrets).
+
 **Backend**
 ```bash
 cd backend
+cp .env.example .env
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
@@ -100,14 +114,16 @@ npm run dev
 ```
 - Runs at: http://localhost:3000
 
-- Frontend should point to:
-```js
-const API_URL = "http://localhost:8000"
-```
-- Later in production, this becomes:
- ```js
-const API_URL = "https://api.libelle.io"
-```
+### Frontend ↔ Backend API routing (no env vars)
+
+For the MVP, the frontend should call relative endpoints:
+- `/api/upload`
+- `/api/health`
+
+Local dev uses a Vite proxy (`/api` → `http://127.0.0.1:8000`).
+
+Production uses NGINX to proxy `/api/*` to the FastAPI service on the Pi.
+
 ## Production Deployment (Summary)
 
 On the Pathfinder Node (Raspberry Pi):

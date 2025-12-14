@@ -6,11 +6,20 @@ from parser import parse_resume
 from sheets_sync import write_base_row, update_resume_in_sheet
 from drive_sync import get_target_folder_id, upload_pdf, download_file
 from google_auth_oauthlib.flow import Flow
+from datetime import datetime, timezone
 import uuid
 
 
 app = FastAPI(title="Resume Intake & Parser API")
 RESUME_COUNTER = 0
+
+@app.get("/health")
+def health():
+    return {
+        "status": "ok",
+        "service": "libelle-backend",
+        "timestamp": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+    }
 
 @app.get("/authorize")
 def authorize():
